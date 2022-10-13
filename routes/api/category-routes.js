@@ -19,7 +19,19 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-
+  Category.findOne({
+    where: {
+      id: req.params.id
+    },
+    include: [
+      Product
+    ]
+  })
+  .then(dbCategoryData => res.json(dbCategoryData))
+  .catch(err => {
+    console.log(err)
+    res.status(500).json(err)
+  });
 });
 
 router.post('/', (req, res) => {
